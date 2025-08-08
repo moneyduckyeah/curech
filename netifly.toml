@@ -1,0 +1,7 @@
+[build]
+  command = "./build.sh"
+  publish = "."
+  functions = "netlify/functions"
+
+[dev]
+  command = "bash ./build.sh && netlify dev"
