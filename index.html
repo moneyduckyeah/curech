@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SecureChat — E2EE</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- Supabase client (fourni par CDN pour simplicité) -->
+  <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/supabase.min.js"></script>
+  <!-- env.js sera généré lors du build (ne le commite pas) -->
+  <script defer src="env.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container">
+      <h1>🔐 SecureChat</h1>
+      <small class="muted">Conversations E2EE — clé côté client • Hébergé sur Netlify • Stockage Supabase</small>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card" id="hero">
+      <div class="hero-left">
+        <h2>Créer une conversation sécurisée</h2>
+        <p>Génère une clé locale et partage un lien d'invitation. Les messages restent chiffrés sur Supabase.</p>
+        <input id="title-input" placeholder="Titre de la conversation" />
+        <div class="row">
+          <button id="create-btn" class="btn">Créer & générer lien</button>
+          <button id="create-pass-btn" class="btn alt">Créer avec mot de passe</button>
+        </div>
+        <div id="invite-area" class="invite hidden">
+          <label>Lien d'invitation (partage sécurisé)</label>
+          <textarea id="invite-link" rows="2" readonly></textarea>
+          <div class="row">
+            <button id="copy-invite" class="btn">Copier le lien</button>
+            <button id="download-invite" class="btn alt">Télécharger clé</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <h3>Rejoindre</h3>
+        <p>Si tu as reçu un lien, ouvre-le ou colle-le ici. Ensuite le chat se synchronise automatiquement.</p>
+        <textarea id="paste-link" rows="2" placeholder="Coller lien d'invitation (optionnel)"></textarea>
+        <div class="row">
+          <input type="file" id="state-file" />
+          <button id="load-btn" class="btn">Charger / Rejoindre</button>
+        </div>
+        <small class="muted">Tu peux aussi coller dans le presse-papier l'état chiffré reçu.</small>
+      </div>
+    </section>
+
+    <section class="card hidden" id="chat-card">
+      <div class="chat-header">
+        <div>
+          <h2 id="chat-title">Conversation</h2>
+          <small id="conv-id" class="muted"></small>
+        </div>
+        <div>
+          <button id="export-state" class="btn alt">Exporter état</button>
+          <button id="copy-state" class="btn">Copier état</button>
+        </div>
+      </div>
+
+      <div id="messages" class="messages"></div>
+
+      <div class="send-row">
+        <input id="name-input" placeholder="Votre nom" />
+        <textarea id="message-input" rows="2" placeholder="Écrire un message..."></textarea>
+        <div class="row">
+          <button id="send-btn" class="btn">Envoyer</button>
+          <button id="invite-again" class="btn alt">Regénérer lien</button>
+        </div>
+      </div>
+
+      <div class="notes">
+        <small class="muted">Partagez la clé / lien de façon sûre (Signal, ProtonMail, USB...). Supabase stocke uniquement des blobs chiffrés.</small>
+      </div>
+    </section>
+  </main>
+
+  <footer class="container muted small">
+    <p>Version prête à déployer • Sujets sensibles : voir README pour meilleures pratiques</p>
+  </footer>
+</body>
+</html>
